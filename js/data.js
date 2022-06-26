@@ -91,7 +91,7 @@ function getComments() {
 
 function getRandomComment() {
   return {
-    id: getCommentId(),
+    id: getCommentId(), // Можно использовать getRandomCommentId()
     avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: getRandomElement(MESSAGES),
     name: getRandomElement(NAMES),
@@ -111,7 +111,7 @@ function getCommentId() {
 const commentIds = [];
 
 function getRandomCommentId() {
-  const randomCommentId = getRandomPositiveInteger(1, 500);
+  const randomCommentId = getRandomPositiveInteger(1, 1000000000);
   if (commentIds.includes(randomCommentId)) {
     return getRandomCommentId();
   } else {
@@ -119,3 +119,4 @@ function getRandomCommentId() {
     return randomCommentId;
   }
 }
+
