@@ -111,7 +111,7 @@ function getCommentId() {
 const commentIds = [];
 
 function getRandomCommentId() {
-  const randomCommentId = getRandomPositiveInteger(1, 1000000000);
+  const randomCommentId = getRandomPositiveInteger(1, 500);
   if (commentIds.includes(randomCommentId)) {
     return getRandomCommentId();
   } else {
