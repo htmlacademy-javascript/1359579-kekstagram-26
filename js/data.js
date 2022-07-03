@@ -1,5 +1,4 @@
-import {getRandomElement} from './util.js';
-import {getRandomPositiveInteger} from './main.js';
+import {getRandomElement, getRandomPositiveInteger} from './utils.js';
 
 const descriptions = [
   'Ахаха, зацени, какой у него маленький объектив!',
@@ -55,15 +54,6 @@ function getComments() {
   return Array.from({length: getRandomPositiveInteger(MIN_COMMENT_QUANTITY, MAX_COMMENT_QUANTITY)}, getRandomComment);
 }
 
-function getRandomComment() {
-  return {
-    id: getCommentId(),
-    avatar: `img/avatar-${getRandomPositiveInteger(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
-    message: getRandomElement(messages),
-    name: getRandomElement(names),
-  };
-}
-
 function getDescriptions() {
   return getRandomElement(descriptions);
 }
@@ -81,7 +71,34 @@ function getCards() {
   return Array.from({length: CARD_QUANTITY}, getRandomCard);
 }
 
-function getRandomCard(_, index) {
+/**
+ * @param {function} getRandomComment - Функция получения рандомного комментария
+ * @return {object} - возвращает объект шаблона
+ * @param {Number} id - идентификатор
+ * @param {String} avatar - url аватара
+ * @param {String} message - текст комментария
+ */
+
+function getRandomComment() {
+  return {
+    id: getCommentId(),
+    avatar: `img/avatar-${getRandomPositiveInteger(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
+    message: getRandomElement(messages),
+    name: getRandomElement(names),
+  };
+}
+
+/**
+ * @param {function} getRandomCard - Функция получения рандомной фотографии
+ * @return {object} - возвращает объект шаблона
+ * @param {Number} id - идентификатор
+ * @param {String} url - url фотографии
+ * @param {String} description - описание фотографии
+ * @param {String} likes - кол-во лайков на фотографии
+ * @param {String} comments - комментарии под фото-фией
+ */
+
+function getRandomCard(index) {
   return {
     id: index + 1,
     url: `photos/${index + 1}.jpg`,
