@@ -95,7 +95,7 @@ function getRandomComment() {
  * @param {String} url - url фотографии
  * @param {String} description - описание фотографии
  * @param {String} likes - кол-во лайков на фотографии
- * @param {String} comments - комментарии под фото-фией
+ * @param {String} comments - комментарии под фотографией
  */
 
 function getRandomCard(index) {
