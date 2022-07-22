@@ -43,7 +43,7 @@ const names = [
 let lastCommentId = 0;
 
 const MIN_COMMENT_QUANTITY = 1;
-const MAX_COMMENT_QUANTITY = 2;
+const MAX_COMMENT_QUANTITY = 7;
 const MIN_LIKE_QUANTITY = 15;
 const MAX_LIKE_QUANTITY = 200;
 const MIN_AVATAR_ID = 1;
