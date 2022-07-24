@@ -1,6 +1,7 @@
 import {getCards} from './data.js';
 import {renderBigPicture} from './big-pictures.js';
 
+
 const picturesList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesFragment = document.createDocumentFragment();
