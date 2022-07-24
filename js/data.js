@@ -108,6 +108,4 @@ function getRandomCard(index) {
   };
 }
 
-getCards();
-
-export {getDescriptions, getComments, getLikes};
+export {getDescriptions, getComments, getLikes, getCards};
