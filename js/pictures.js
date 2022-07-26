@@ -1,10 +1,8 @@
 import {getCards} from './data.js';
 import {renderBigPicture} from './big-pictures.js';
 
-
 const picturesList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const picturesFragment = document.createDocumentFragment();
 
 /**
  * @param {Number} likes - количество лайков
@@ -13,16 +11,19 @@ const picturesFragment = document.createDocumentFragment();
  * @param {String} description - описание изображения
  */
 
-function renderPictures(pictures) {
+const renderPictures = (pictures) => {
+  const listPicturesFragment = document.createDocumentFragment();
   pictures.forEach(({likes, url, comments, description}) => {
     const elementPicture = pictureTemplate.cloneNode(true);
     elementPicture.querySelector('.picture__likes').textContent = likes;
     elementPicture.querySelector('.picture__img').src = url;
     elementPicture.querySelector('.picture__comments').textContent = comments.length;
-    elementPicture.addEventListener('click', () => renderBigPicture(url, likes, comments, description));
-    picturesFragment.appendChild(elementPicture);
+    elementPicture.addEventListener('click', () => {
+      renderBigPicture(url, likes, comments, description);
+    });
+    listPicturesFragment.appendChild(elementPicture);
   });
-  picturesList.appendChild(picturesFragment);
-}
+  picturesList.appendChild(listPicturesFragment);
+};
 
 renderPictures(getCards());

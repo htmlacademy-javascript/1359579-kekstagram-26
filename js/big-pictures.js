@@ -6,15 +6,14 @@ const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const comentsList = document.querySelector('.social__comments');
 const templateComment = document.querySelector('.social__comment');
-const commentCountElement = bigPicture.querySelector('.comments-count');
-const commentsLoaderElement = bigPicture.querySelector('.comments-loader');
+const commentCount = bigPicture.querySelector('.comments-count');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
 const loadedCommentsCount = bigPicture.querySelector('.loaded-comments-count');
 const captionElement = bigPicture.querySelector('.social__caption');
 const bigPictureElement = document.querySelector('.big-picture__img img');
 const cancelElement = bigPicture.querySelector('.big-picture__cancel');
 const likesCountElement = bigPicture.querySelector('.likes-count');
 let commentOffset;
-
 
 function renderComment(comments) {
   document.querySelectorAll('.social__comment').forEach((item) => item.remove());
@@ -32,7 +31,7 @@ function renderComment(comments) {
   comentsList.appendChild(comentsListFragment);
 
   if (commentOffset + COMMENTS_LIMIT >= comments.length) {
-    commentsLoaderElement.classList.add('hidden');
+    commentsLoader.classList.add('hidden');
   }
 }
 
@@ -58,10 +57,10 @@ function clickHandler() {
 
 function renderBigPicture(url, likes, comments, description) {
   bigPicture.classList.remove('hidden');
-  commentsLoaderElement.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
   bigPictureElement.src = url;
   likesCountElement.textContent = likes;
-  commentCountElement.textContent = comments.length;
+  commentCount.textContent = comments.length;
   captionElement.textContent = description;
   document.querySelectorAll('.social__comment').forEach((item) => item.remove());
   commentOffset = 0;
@@ -73,7 +72,7 @@ function renderBigPicture(url, likes, comments, description) {
 
   document.addEventListener('keydown', keydownEscapeHandler);
   cancelElement.addEventListener('click', clickHandler);
-  commentsLoaderElement.addEventListener('click', () => renderMoreComments(comments));
+  commentsLoader.addEventListener('click', () => renderMoreComments(comments));
 }
 
 export {renderBigPicture};
