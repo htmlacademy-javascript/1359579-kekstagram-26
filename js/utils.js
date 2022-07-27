@@ -3,7 +3,6 @@ const MIN_ITEM_ID = 1;
 const MAX_ITEM_ID = 1000000000;
 const TIME_WARNING = 5000;
 
-
 function getRandomPositiveInteger (a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -54,5 +53,27 @@ const showAlert = (message) => {
   }, TIME_WARNING);
 };
 
-export {getRandomPositiveInteger, getRandomElement, getRandomArrayId, isEscapeKey, showAlert};
+// основано на алгоритме Fisher–Yates shuffle
+
+const getRandomElements = (array, count) => {
+  let i = array.length;
+  while (--i > 0) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [array[randomIndex], array[i]] = [array[i], array[randomIndex]];
+    if (i <= array.length - count) {
+      break;
+    }
+  }
+  return array.slice(-count);
+};
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomPositiveInteger, getRandomElement, getRandomArrayId, isEscapeKey, showAlert, getRandomElements, debounce};
 
