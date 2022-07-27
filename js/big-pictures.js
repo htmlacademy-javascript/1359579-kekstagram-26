@@ -1,18 +1,17 @@
 import {isEscapeKey} from './utils.js';
 
-const COMMENTS_LIMIT = 5;
-
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const comentsList = document.querySelector('.social__comments');
 const templateComment = document.querySelector('.social__comment');
+const captionElement = bigPicture.querySelector('.social__caption');
 const commentCount = bigPicture.querySelector('.comments-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const loadedCommentsCount = bigPicture.querySelector('.loaded-comments-count');
-const captionElement = bigPicture.querySelector('.social__caption');
 const bigPictureElement = document.querySelector('.big-picture__img img');
 const cancelElement = bigPicture.querySelector('.big-picture__cancel');
 const likesCountElement = bigPicture.querySelector('.likes-count');
+const COMMENTS_LIMIT = 5;
 let commentOffset;
 let renderCommentsHandler;
 
@@ -41,7 +40,7 @@ const renderMoreComments = (comments) => {
   renderComment(comments);
 };
 
-const keydownEscapeHandler = (evt) =>  {
+function keydownEscapeHandler(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
@@ -49,12 +48,13 @@ const keydownEscapeHandler = (evt) =>  {
     document.removeEventListener('keydown', keydownEscapeHandler);
     commentsLoader.removeEventListener('click', renderCommentsHandler);
   }
-};
+}
 
 function clickHandler() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   cancelElement.removeEventListener('click', clickHandler);
+  document.removeEventListener('keydown', keydownEscapeHandler);
   commentsLoader.removeEventListener('click', renderCommentsHandler);
 }
 
