@@ -38,7 +38,8 @@ const renderPictures = (pictures) => {
 
 const clearPictures = () => picturesList.querySelectorAll('.picture').forEach((item) => item.remove());
 
-const clearActiveFilterButton = () => imgFiltersForm.forEach((item) => item.classList.remove('img-filters__button--active'));
+const clearActiveFilterButton = () => imgFiltersForm.forEach(
+  (item) => item.classList.remove('img-filters__button--active'));
 
 const filterClick = (evt) => {
   if (evt.target.nodeName === 'BUTTON') {
