@@ -1,5 +1,5 @@
+import {getCards} from './data.js';
 import {renderBigPicture} from './big-pictures.js';
-import {getData} from './api.js';
 
 const picturesList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -26,4 +26,4 @@ const renderPictures = (pictures) => {
   picturesList.appendChild(listPicturesFragment);
 };
 
-getData(renderPictures);
+renderPictures(getCards());
