@@ -25,8 +25,7 @@ const showAlert = (message) => {
   }, TIME_WARNING);
 };
 
-// основано на алгоритме Fisher–Yates shuffle
-
+//Основано на алгоритме Fisher–Yates shuffle
 const getRandomElements = (array, count) => {
   let i = array.length;
   while (--i > 0) {
@@ -36,11 +35,13 @@ const getRandomElements = (array, count) => {
       break;
     }
   }
+
   return array.slice(-count);
 };
 
 const debounce = (callback, timeoutDelay) => {
   let timeoutId;
+
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
