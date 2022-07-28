@@ -1,6 +1,6 @@
+import {applyOriginalEffect} from './slider.js';
 import {isEscapeKey} from './utils.js';
 import {sendData} from './api.js';
-import {applyOriginalEffect} from './slider.js';
 
 const body = document.querySelector('body');
 const uploadForm = document.querySelector('.img-upload__form');
@@ -23,6 +23,7 @@ const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 const SCALE_STEP = 25;
 const SCALE_DEFAULT = 100;
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 let scaleValue = SCALE_DEFAULT;
 
 
@@ -98,13 +99,13 @@ function hashtagValidator (value) {
   return isValid;
 }
 
-const validateHashtag = (value) => {
+const checkNumberHashtags = (value) => {
   const words = value.trim().split(' ');
   const isValid = value === '' || words.every((word) => HASHTAG_RE.test(word));
   return isValid;
 };
 
-const noRepeatHashtags = (value) => {
+const checkRepeatedHashtags = (value) => {
   const words = value.trim().toLowerCase().split(' ');
   const isValid = value === '' || new Set(words).size === words.length;
   return isValid;
@@ -117,8 +118,8 @@ const maxRenderHashtags = (value) => {
 };
 
 pristine.addValidator(textHashtags, hashtagValidator);
-pristine.addValidator(textHashtags, validateHashtag, 'ХэшТэг начинается с # и содержит не более 20 любых букв и цифр.');
-pristine.addValidator(textHashtags, noRepeatHashtags, 'ХэшТэги не должны повторяться.');
+pristine.addValidator(textHashtags, checkNumberHashtags, 'ХэшТэг начинается с # и содержит не более 20 любых букв и цифр.');
+pristine.addValidator(textHashtags, checkRepeatedHashtags, 'ХэшТэги не должны повторяться.');
 pristine.addValidator(textHashtags, maxRenderHashtags, 'Можно использовать не более 5 ХэшТэгов.');
 
 const blockSubmitButton = () => {submitButton.disabled = true;};
@@ -137,19 +138,21 @@ const showSuccess = () => {
   const elementSuccess = uploadSuccess.cloneNode(true);
   elementSuccess.querySelector('.success__button').addEventListener('click', () => elementSuccess.remove());
 
-  const keydownEscapeSuccessHandler = (evt) => {
+  function keydownEscapeSuccessHandler(evt) {
     if (isEscapeKey(evt)) {
       elementSuccess.remove();
       document.removeEventListener('keydown', keydownEscapeSuccessHandler);
+      document.removeEventListener('click', clickSuccessHandler);
     }
-  };
+  }
 
   document.addEventListener('keydown', keydownEscapeSuccessHandler);
 
-  const clickSuccessHandler = () => {
+  function clickSuccessHandler() {
     elementSuccess.remove();
     document.removeEventListener('click', clickSuccessHandler);
-  };
+    document.removeEventListener('keydown', keydownEscapeSuccessHandler);
+  }
 
   document.addEventListener('click', clickSuccessHandler);
   body.appendChild(elementSuccess);
@@ -162,29 +165,45 @@ const showError = () => {
     showForm();
   });
 
-  const keydownEscapeErrorHandler = (evt) => {
+  function keydownEscapeErrorHandler(evt) {
     if (isEscapeKey(evt)) {
       elementError.remove();
       showForm();
       document.removeEventListener('keydown', keydownEscapeErrorHandler);
+      document.removeEventListener('click', clickErrorHandler);
     }
-  };
+  }
 
   document.addEventListener('keydown', keydownEscapeErrorHandler);
-  const clickErrorHandler = () => {
+  function clickErrorHandler()  {
     elementError.remove();
     document.removeEventListener('click', clickErrorHandler);
+    document.removeEventListener('keydown', keydownEscapeErrorHandler);
     showForm();
-  };
+  }
 
   document.addEventListener('click', clickErrorHandler);
   body.appendChild(elementError);
 };
 
+const userUploadFile = () => {
+  const userFile = uploadFile.files[0];
+  const userFileName = userFile.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => userFileName.endsWith(it));
+  if (matches) {
+    imgUploadPreview.src = URL.createObjectURL(userFile);
+  }
+};
+
 uploadFile.addEventListener('change', () => {
   showForm();
+  userUploadFile();
   addScaleValue();
   applyOriginalEffect();
+});
+
+uploadFile.addEventListener('click', (evt) => {
+  evt.target.value = '';
 });
 
 uploadForm.addEventListener('submit', (evt) => {
