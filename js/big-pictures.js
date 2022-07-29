@@ -2,7 +2,7 @@ import {isEscapeKey} from './utils.js';
 
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
-const commentsList = document.querySelector('.social__comments');
+const comentsList = document.querySelector('.social__comments');
 const templateComment = document.querySelector('.social__comment');
 const captionElement = bigPicture.querySelector('.social__caption');
 const commentCount = bigPicture.querySelector('.comments-count');
@@ -28,7 +28,7 @@ function renderComment(comments) {
     comentsListFragment.appendChild(elementComment);
   });
 
-  commentsList.appendChild(comentsListFragment);
+  comentsList.appendChild(comentsListFragment);
 
   if (commentOffset + COMMENTS_LIMIT >= comments.length) {
     commentsLoader.classList.add('hidden');
