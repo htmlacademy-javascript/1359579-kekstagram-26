@@ -26,7 +26,6 @@ function renderComment(comments) {
     elementComment.querySelector('.social__text').textContent = message;
     comentsListFragment.appendChild(elementComment);
   });
-
   commentsList.appendChild(comentsListFragment);
 
   if (commentOffset + COMMENTS_LIMIT >= comments.length) {
