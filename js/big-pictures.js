@@ -2,21 +2,20 @@ import {isEscapeKey} from './utils.js';
 
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
-const commentsList = document.querySelector('.social__comments');
-const templateComment = document.querySelector('.social__comment');
-const captionElement = bigPicture.querySelector('.social__caption');
-const commentCount = bigPicture.querySelector('.comments-count');
-const commentsLoader = bigPicture.querySelector('.comments-loader');
-const loadedCommentsCount = bigPicture.querySelector('.loaded-comments-count');
 const bigPictureElement = document.querySelector('.big-picture__img img');
 const cancelElement = bigPicture.querySelector('.big-picture__cancel');
+const commentCount = bigPicture.querySelector('.comments-count');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
+const captionElement = bigPicture.querySelector('.social__caption');
+const commentsList = document.querySelector('.social__comments');
+const templateComment = document.querySelector('.social__comment');
+const loadedCommentsCount = bigPicture.querySelector('.loaded-comments-count');
 const likesCountElement = bigPicture.querySelector('.likes-count');
 const COMMENTS_LIMIT = 5;
 let commentOffset;
 let renderCommentsHandler;
 
 function renderComment(comments) {
-  document.querySelectorAll('.social__comment').forEach((item) => item.remove());
   const comentsListFragment = document.createDocumentFragment();
 
   loadedCommentsCount.textContent = Math.min(comments.length, commentOffset + COMMENTS_LIMIT);
@@ -27,7 +26,6 @@ function renderComment(comments) {
     elementComment.querySelector('.social__text').textContent = message;
     comentsListFragment.appendChild(elementComment);
   });
-
   commentsList.appendChild(comentsListFragment);
 
   if (commentOffset + COMMENTS_LIMIT >= comments.length) {
@@ -46,6 +44,7 @@ function keydownEscapeHandler(evt) {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     document.removeEventListener('keydown', keydownEscapeHandler);
+    cancelElement.removeEventListener('click', clickHandler);
     commentsLoader.removeEventListener('click', renderCommentsHandler);
   }
 }
